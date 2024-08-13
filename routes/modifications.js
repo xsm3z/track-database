@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const modificationCtrl = require('../controllers modifications')
+const modificationCtrl = require('../controllers/modifications')
 
 // index
 router.get('/', modificationCtrl.index)
@@ -9,7 +9,7 @@ router.get('/', modificationCtrl.newFunc)
 // update
 router.put('/:id', modificationCtrl.update)
 // delete
-router.delete('/:id', modificationCtrl.destory)
+router.delete('/:id', modificationCtrl.destroy)
 // create
 router.post('/', modificationCtrl.create)
 // edit

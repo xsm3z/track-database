@@ -9,7 +9,7 @@ router.get('/', driverCtrl.newFunc)
 // update
 router.put('/:id', driverCtrl.update)
 // delete
-router.delete('/:id', driverCtrl.destory)
+router.delete('/:id', driverCtrl.destroy)
 // create
 router.post('/', driverCtrl.create)
 // edit
