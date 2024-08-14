@@ -1,74 +1,85 @@
-const Driver = require('../models/driver')
+const Driver = require('../models/driver');
 
 const index = async (req, res) => {
   try {
-    const foundDrivers = await Driver.find({})
-    res.render('Drivers/index.ejs', {
-      Drivers: foundDrivers
-    })
+    const foundDrivers = await Driver.find({});
+    res.render('drivers/index.ejs', {
+      drivers: foundDrivers
+    });
   } catch (error) {
-    res.status(400).json({msg: error.message})
+    res.status(400).json({ msg: error.message });
   }
-}
+};
 
 const newFunc = (req, res) => {
-  res.render('Drivers/new.ejs')
-}
+  res.render('drivers/new.ejs');
+};
 
 const destroy = async (req, res) => {
   try {
-    const deletedDriver = await Driver.findOneAndDelete({_id: req.params.id})
-    deletedDriver.posts.forEach((post) => {
-      post.deleteOne()
-    })
-    deletedDriver.comments.forEach((comment) => {
-      comment.deleteOne()
-    })
-    res.redirect('/drivers')
+    const deletedDriver = await Driver.findOneAndDelete({ _id: req.params.id });
+    if (!deletedDriver) {
+      return res.status(404).json({ msg: 'Driver not found.' });
+    }
+    res.redirect('/drivers');
   } catch (error) {
-    res.status(400).json({msg: error.message})
+    res.status(400).json({ msg: error.message });
   }
-}
-
-const update = async (req, res) => {
-  try {
-    const updatedDriver = await Driver.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
-    res.redirect(`/drivers/${updatedDriver._id}`)
-  } catch (error) {
-    res.status(400).json({msg: error.message})
-  }
-}
+};
 
 const create = async (req, res) => {
   try {
-    const createdDriver = await Driver.create(req.body)
-    res.redirect(`/drivers/${createdDriver._id}`)
+    const existingDriver = await Driver.findOne({ email: req.body.email });
+    if (existingDriver) {
+      return res.status(400).json({ msg: 'Email already exists.' });
+    }
+    const createdDriver = await Driver.create(req.body);
+    res.redirect(`/drivers/${createdDriver._id}`);
   } catch (error) {
-    res.status(400).json({msg: error.message})
+    res.status(400).json({ msg: error.message });
   }
-}
+};
+
+const update = async (req, res) => {
+  try {
+    const existingDriver = await Driver.findOne({ email: req.body.email });
+    if (existingDriver && existingDriver._id.toString() !== req.params.id) {
+      return res.status(400).json({ msg: 'Email already exists.' });
+    }
+    const updatedDriver = await Driver.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+    res.redirect(`/drivers/${updatedDriver._id}`);
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+};
 
 const edit = async (req, res) => {
   try {
-      const foundDriver = await Driver.findOne({ _id: req.params.id })
-      res.render('Drivers/edit.ejs', {
-          Driver: foundDriver
-      })
+    const foundDriver = await Driver.findOne({ _id: req.params.id });
+    if (!foundDriver) {
+      return res.status(404).json({ msg: 'Driver not found.' });
+    }
+    res.render('drivers/edit.ejs', {
+      driver: foundDriver 
+    });
   } catch (error) {
-      res.status(400).json({ msg: error.message })
+    res.status(400).json({ msg: error.message });
   }
-}
+};
 
 const show = async (req, res) => {
   try {
-      const foundDriver = await Driver.findOne({ _id: req.params.id }).populate('posts comments')
-      res.render('Drivers/show.ejs', {
-          Driver: foundDriver
-      })
+    const foundDriver = await Driver.findOne({ _id: req.params.id })
+    if (!foundDriver) {
+      return res.status(404).json({ msg: 'Driver not found.' });
+    }
+    res.render('drivers/show.ejs', {
+      driver: foundDriver 
+    });
   } catch (error) {
-      res.status(400).json({ msg: error.message })
+    res.status(400).json({ msg: error.message });
   }
-}
+};
 
 module.exports = {
   index,
@@ -78,4 +89,4 @@ module.exports = {
   create,
   edit,
   show
-}
+};

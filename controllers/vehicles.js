@@ -3,8 +3,8 @@ const Vehicle = require('../models/vehicle')
 const index = async (req, res) => {
   try {
     const foundVehicles = await Vehicle.find({})
-    res.render('Vehicles/index.ejs', {
-      Vehicles: foundVehicles
+    res.render('vehicles/index.ejs', {
+      vehicles: foundVehicles
     })
   } catch (error) {
     res.status(400).json({msg: error.message})
@@ -12,7 +12,7 @@ const index = async (req, res) => {
 }
 
 const newFunc = (req, res) => {
-  res.render('Vehicles/new.ejs')
+  res.render('vehicles/new.ejs')
 }
 
 const destroy = async (req, res) => {
@@ -51,8 +51,8 @@ const create = async (req, res) => {
 const edit = async (req, res) => {
   try {
       const foundVehicle = await Vehicle.findOne({ _id: req.params.id })
-      res.render('Vehicles/edit.ejs', {
-          Vehicle: foundVehicle
+      res.render('vehicles/edit.ejs', {
+          vehicle: foundVehicle
       })
   } catch (error) {
       res.status(400).json({ msg: error.message })
@@ -61,9 +61,9 @@ const edit = async (req, res) => {
 
 const show = async (req, res) => {
   try {
-      const foundVehicle = await Vehicle.findOne({ _id: req.params.id }).populate('posts comments')
-      res.render('Vehicles/show.ejs', {
-          Vehicle: foundVehicle
+      const foundVehicle = await Vehicle.findOne({ _id: req.params.id })
+      res.render('vehicles/show.ejs', {
+          vehicle: foundVehicle
       })
   } catch (error) {
       res.status(400).json({ msg: error.message })
