@@ -3,7 +3,6 @@ const Vehicle = require('../models/vehicle')
 const index = async (req, res) => {
   try {
     const foundVehicles = await Vehicle.find({})
-    console.log('Found vehicles:', foundVehicles)
     res.render('vehicles/index.ejs', {
       vehicles: foundVehicles
     })

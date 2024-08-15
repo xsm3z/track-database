@@ -26,11 +26,9 @@ app.use(methodOverride('_method'))
 app.use('/assets', express.static('public'))
 
 const driverRoutes = require('./routes/drivers')
-const modificationRoutes = require('./routes/modifications')
 const vehicleRoutes = require('./routes/vehicles')
 
 app.use('/drivers', driverRoutes)
-app.use('/modifications', modificationRoutes)
 app.use('/vehicles', vehicleRoutes)
 
 app.listen(3000, () => {
