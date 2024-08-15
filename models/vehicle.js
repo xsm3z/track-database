@@ -6,7 +6,8 @@ const vehicleSchema = new mongoose.Schema({
   model: { type: String, required: true },
   class: { type: String, required: true },
   number: { type: Number, required: true },
-  modifications: { type: mongoose.Schema.Types.ObjectId, ref: 'Modification'}
+  modifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Modification'}],
+  driver: { type: mongoose.Schema.Types.ObjectId, ref: 'Driver' }
 })
 
 const Vehicle = mongoose.model('Vehicle', vehicleSchema)

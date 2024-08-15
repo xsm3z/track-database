@@ -3,8 +3,8 @@ const Modification = require('../models/modification')
 const index = async (req, res) => {
   try {
     const foundModifications = await Modification.find({})
-    res.render('Modifications/index.ejs', {
-      Modifications: foundModifications
+    res.render('modifications/index.ejs', {
+      modifications: foundModifications
     })
   } catch (error) {
     res.status(400).json({msg: error.message})
@@ -12,7 +12,7 @@ const index = async (req, res) => {
 }
 
 const newFunc = (req, res) => {
-  res.render('Modifications/new.ejs')
+  res.render('modifications/new.ejs')
 }
 
 const destroy = async (req, res) => {
@@ -51,8 +51,8 @@ const create = async (req, res) => {
 const edit = async (req, res) => {
   try {
       const foundModification = await Modification.findOne({ _id: req.params.id })
-      res.render('Modifications/edit.ejs', {
-          Modification: foundModification
+      res.render('modifications/edit.ejs', {
+          modification: foundModification
       })
   } catch (error) {
       res.status(400).json({ msg: error.message })
@@ -62,8 +62,8 @@ const edit = async (req, res) => {
 const show = async (req, res) => {
   try {
       const foundModification = await Modification.findOne({ _id: req.params.id }).populate('posts comments')
-      res.render('Modifications/show.ejs', {
-          Modification: foundModification
+      res.render('modifications/show.ejs', {
+          modification: foundModification
       })
   } catch (error) {
       res.status(400).json({ msg: error.message })
