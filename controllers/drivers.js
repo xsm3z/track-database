@@ -1,4 +1,5 @@
 const Driver = require('../models/driver');
+const Vehicle = require('../models/vehicle');
 
 const index = async (req, res) => {
   try {
@@ -69,13 +70,26 @@ const edit = async (req, res) => {
 
 const show = async (req, res) => {
   try {
-    const foundDriver = await Driver.findOne({ _id: req.params.id })
-    if (!foundDriver) {
+    const driver = await Driver.findById(req.params.id).populate('vehicles');
+    if (!driver) {
+      return res.status(404).send('Driver not found');
+    }
+    res.render('drivers/show.ejs', { driver });
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+};
+
+const createVehicle = async (req, res) => {
+  try {
+    const driver = await Driver.findById(req.params.id);
+    if (!driver) {
       return res.status(404).json({ msg: 'Driver not found.' });
     }
-    res.render('drivers/show.ejs', {
-      driver: foundDriver 
-    });
+    const newVehicle = await Vehicle.create({ ...req.body, driver: driver._id });
+    driver.vehicles.push(newVehicle._id);
+    await driver.save();
+    res.redirect(`/drivers/${driver._id}`);
   } catch (error) {
     res.status(400).json({ msg: error.message });
   }
@@ -88,5 +102,6 @@ module.exports = {
   update,
   create,
   edit,
-  show
+  show,
+  createVehicle
 };

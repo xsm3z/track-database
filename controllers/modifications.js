@@ -17,18 +17,15 @@ const newFunc = (req, res) => {
 
 const destroy = async (req, res) => {
   try {
-    const deletedModification = await Modification.findOneAndDelete({_id: req.params.id})
-    deletedModification.posts.forEach((post) => {
-      post.deleteOne()
-    })
-    deletedModification.comments.forEach((comment) => {
-      comment.deleteOne()
-    })
-    res.redirect('/modifications')
+    const modification = await Modification.findByIdAndDelete(req.params.id);
+    if (!modification) {
+      return res.status(404).json({ msg: 'Modification not found' });
+    }
+    res.redirect('/modifications');
   } catch (error) {
-    res.status(400).json({msg: error.message})
+    res.status(400).json({ msg: error.message });
   }
-}
+};
 
 const update = async (req, res) => {
   try {

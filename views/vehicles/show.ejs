@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= vehicle.make %> <%= vehicle.model %></title>
+</head>
+<body>
+  <h1><%= vehicle.make %> <%= vehicle.model %></h1>
+  <p>VIN: <%= vehicle.vin %></p>
+  <p>Class: <%= vehicle.class %></p>
+  <p>Number: <%= vehicle.number %></p>
+  
+  <h3>Modifications:</h3>
+  <ul>
+    <% vehicle.modifications.forEach(function(modification) { %>
+      <li><%= modification.engine %>, <%= modification.suspension %>, <%= modification.chassis %>, <%= modification.tires %></li>
+    <% }) %>
+  </ul>
+  
+  <a href="/vehicles/<%= vehicle._id %>/edit">Edit</a>
+  <form action="/vehicles/<%= vehicle._id %>?_method=DELETE" method="POST">
+    <button type="submit">Delete</button>
+  </form>
+  <a href="/vehicles">Back to Vehicles</a>
+</body>
+</html>

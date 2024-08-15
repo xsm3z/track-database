@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Vehicle</title>
+</head>
+<body>
+  <h1>Add New Vehicle</h1>
+  <form action="/vehicles" method="POST">
+    <label for="vin">VIN:</label>
+    <input type="text" name="vin" required>
+    
+    <label for="make">Make:</label>
+    <input type="text" name="make" required>
+    
+    <label for="model">Model:</label>
+    <input type="text" name="model" required>
+    
+    <label for="class">Class:</label>
+    <input type="text" name="class" required>
+    
+    <label for="number">Number:</label>
+    <input type="number" name="number" required>
+    
+    <button type="submit">Add Vehicle</button>
+  </form>
+  <a href="/vehicles">Back to Vehicles</a>
+</body>
+</html>

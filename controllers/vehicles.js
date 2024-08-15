@@ -3,6 +3,7 @@ const Vehicle = require('../models/vehicle')
 const index = async (req, res) => {
   try {
     const foundVehicles = await Vehicle.find({})
+    console.log('Found vehicles:', foundVehicles)
     res.render('vehicles/index.ejs', {
       vehicles: foundVehicles
     })
@@ -17,18 +18,15 @@ const newFunc = (req, res) => {
 
 const destroy = async (req, res) => {
   try {
-    const deletedVehicle = await Vehicle.findOneAndDelete({_id: req.params.id})
-    deletedVehicle.posts.forEach((post) => {
-      post.deleteOne()
-    })
-    deletedVehicle.comments.forEach((comment) => {
-      comment.deleteOne()
-    })
-    res.redirect('/vehicles')
+    const vehicle = await Vehicle.findByIdAndDelete(req.params.id);
+    if (!vehicle) {
+      return res.status(404).json({ msg: 'Vehicle not found' });
+    }
+    res.redirect('/vehicles');
   } catch (error) {
-    res.status(400).json({msg: error.message})
+    res.status(400).json({ msg: error.message });
   }
-}
+};
 
 const update = async (req, res) => {
   try {

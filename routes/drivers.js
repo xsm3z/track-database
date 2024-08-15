@@ -23,4 +23,7 @@ router.put('/:id', driverCtrl.update);
 // delete
 router.delete('/:id', driverCtrl.destroy);
 
+// create (vehicles)
+router.post('/:id/vehicles', driverCtrl.createVehicle);
+
 module.exports = router;

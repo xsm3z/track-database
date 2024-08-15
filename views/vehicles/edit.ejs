@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Vehicle</title>
+</head>
+<body>
+  <h1>Edit Vehicle</h1>
+  <form action="/vehicles/<%= vehicle._id %>?_method=PUT" method="POST">
+    <label for="vin">VIN:</label>
+    <input type="text" name="vin" value="<%= vehicle.vin %>" required>
+    
+    <label for="make">Make:</label>
+    <input type="text" name="make" value="<%= vehicle.make %>" required>
+    
+    <label for="model">Model:</label>
+    <input type="text" name="model" value="<%= vehicle.model %>" required>
+    
+    <label for="class">Class:</label>
+    <input type="text" name="class" value="<%= vehicle.class %>" required>
+    
+    <label for="number">Number:</label>
+    <input type="number" name="number" value="<%= vehicle.number %>" required>
+    
+    <button type="submit">Update Vehicle</button>
+  </form>
+  <a href="/vehicles">Back to Vehicles</a>
+</body>
+</html>
