@@ -38,12 +38,18 @@ const update = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const createdVehicle = await Vehicle.create(req.body)
-    res.redirect(`/vehicles/${createdVehicle._id}`)
+    const driver = await Driver.findById(req.params.id);
+    if (!driver) {
+      return res.status(404).json({ msg: 'Driver not found.' });
+    }
+    const newVehicle = await Vehicle.create({ ...req.body, driver: driver._id });
+    driver.vehicles.push(newVehicle._id);
+    await driver.save();
+    res.redirect(`/drivers/${driver._id}`);
   } catch (error) {
-    res.status(400).json({msg: error.message})
+    res.status(400).json({ msg: error.message });
   }
-}
+};
 
 const edit = async (req, res) => {
   try {

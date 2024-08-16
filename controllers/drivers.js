@@ -1,5 +1,4 @@
 const Driver = require('../models/driver');
-const Vehicle = require('../models/vehicle');
 
 const index = async (req, res) => {
   try {
@@ -80,21 +79,6 @@ const show = async (req, res) => {
   }
 };
 
-const createVehicle = async (req, res) => {
-  try {
-    const driver = await Driver.findById(req.params.id);
-    if (!driver) {
-      return res.status(404).json({ msg: 'Driver not found.' });
-    }
-    const newVehicle = await Vehicle.create({ ...req.body, driver: driver._id });
-    driver.vehicles.push(newVehicle._id);
-    await driver.save();
-    res.redirect(`/drivers/${driver._id}`);
-  } catch (error) {
-    res.status(400).json({ msg: error.message });
-  }
-};
-
 module.exports = {
   index,
   newFunc,
@@ -102,6 +86,5 @@ module.exports = {
   update,
   create,
   edit,
-  show,
-  createVehicle
+  show
 };

@@ -18,27 +18,7 @@
     <% }) %>
   </ul>
 
-<h3>Add a Vehicle</h3>
-<form action="/drivers/<%= driver._id %>/vehicles" method="POST">
-  <label for="make">Make:</label>
-  <input type="text" name="make" required>
-  
-  <label for="model">Model:</label>
-  <input type="text" name="model" required>
-  
-  <label for="class">Class:</label>
-  <input type="text" name="class" required>
-  
-  <label for="number">Number:</label>
-  <input type="number" name="number" required>
-  
-  <label for="vin">VIN:</label>
-  <input type="text" name="vin" required>
-  
-  <button type="submit">Add Vehicle</button>
-</form>
-
-  <a href="/drivers/<%= driver._id %>/edit">Edit</a>
+  <a href="/drivers/<%= driver._id %>/edit"><button type="submit">Edit</button></a>
   <form action="/drivers/<%= driver._id %>?_method=DELETE" method="POST">
     <button type="submit">Delete</button>
   </form>
