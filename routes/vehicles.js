@@ -6,7 +6,7 @@ const vehicleCtrl = require('../controllers/vehicles')
 router.get('/', vehicleCtrl.index)
 
 // new
-router.get('/', vehicleCtrl.newFunc)
+router.get('/new', vehicleCtrl.newFunc)
 
 // update
 router.put('/:id', vehicleCtrl.update)

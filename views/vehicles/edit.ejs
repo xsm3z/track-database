@@ -6,6 +6,7 @@
   <title>Edit Vehicle</title>
 </head>
 <body>
+  <%- include('../partials/_navbar') %>
   <h1>Edit Vehicle</h1>
   <form action="/vehicles/<%= vehicle._id %>?_method=PUT" method="POST">
     <label for="vin">VIN:</label>

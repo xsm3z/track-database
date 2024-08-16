@@ -6,6 +6,7 @@
   <title><%= vehicle.make %> <%= vehicle.model %></title>
 </head>
 <body>
+  <%- include('../partials/_navbar') %>
   <h1><%= vehicle.make %> <%= vehicle.model %> - VIN: <%= vehicle.vin %></h1>
   <a href="/vehicles">Back to Vehicles</a>
 </body>
