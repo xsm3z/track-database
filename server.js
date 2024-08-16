@@ -45,6 +45,6 @@ app.get('/', (req, res) => {
   res.render('home'); 
 });
 
-app.listen(3001, () => {
+app.listen(3000, () => {
   console.log('Running the app on 3000')
 })

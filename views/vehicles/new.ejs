@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Vehicle</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('../partials/_navbar') %>
+  <div class="container">
+    <h1>Add a New Vehicle for <%= driver.firstName %> <%= driver.lastName %></h1>  
+    <form action="/drivers/<%= driver._id %>/vehicles" method="POST">
+      <label for="vin">VIN:</label>
+      <input type="text" name="vin" required>     
+      <label for="make">Make:</label>
+      <input type="text" name="make" required>    
+      <label for="model">Model:</label>
+      <input type="text" name="model" required>   
+      <label for="class">Class:</label>
+      <input type="text" name="class" required>    
+      <label for="number">Number:</label>
+      <input type="number" name="number" required>   
+      <button type="submit">Add Vehicle</button>
+    </form> 
+    <a href="/drivers/<%= driver._id %>/vehicles">Back to Vehicles</a>
+  </div>
+</body>
+</html>

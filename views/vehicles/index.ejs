@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <%- include('../partials/_navbar') %>
+  <h1>All Vehicles</h1>
+  <ul>
+    <% vehicles.forEach(vehicle => { %>
+      <li>
+        <% if (vehicle.driver) { %>
+          <a href="/drivers/<%= vehicle.driver._id %>/vehicles/<%= vehicle._id %>">
+            <%= vehicle.make %> <%= vehicle.model %> (Driver: <%= vehicle.driver.firstName %> <%= vehicle.driver.lastName %>)
+          </a>
+        <% } else { %>
+          <%= vehicle.make %> <%= vehicle.model %> (No driver assigned)
+        <% } %>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>

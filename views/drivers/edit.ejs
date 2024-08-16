@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <%- include('../partials/_navbar') %>
+  <h1>Edit Driver: <%= driver.firstName %> <%= driver.lastName %></h1> 
+  <form action="/drivers/<%= driver._id %>?_method=PUT" method="POST">
+    <label for="firstName">First Name:</label>
+    <input type="text" name="firstName" value="<%= driver.firstName %>" required>
+    <label for="lastName">Last Name:</label>
+    <input type="text" name="lastName" value="<%= driver.lastName %>" required>
+    <label for="email">Email:</label>
+    <input type="email" name="email" value="<%= driver.email %>" required> 
+    <button type="submit">Update Driver</button>
+  </form>
+  <a href="/drivers/<%= driver._id %>">Back to Driver</a>
+</body>
+</html>
