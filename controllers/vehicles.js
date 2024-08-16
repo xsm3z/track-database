@@ -1,19 +1,81 @@
-const Vehicle = require('../models/vehicle')
+const Vehicle = require('../models/vehicle');
+const Driver = require('../models/driver');
 
 const index = async (req, res) => {
   try {
-    const foundVehicles = await Vehicle.find({})
-    res.render('vehicles/index.ejs', {
-      vehicles: foundVehicles
-    })
+    const vehicles = await Vehicle.find({}).populate('driver');
+    res.render('vehicles/index.ejs', { vehicles });
   } catch (error) {
-    res.status(400).json({msg: error.message})
+    res.status(404).json({ msg: error.message });
   }
-}
+};
 
-const newFunc = (req, res) => {
-  res.render('vehicles/new.ejs')
-}
+const newFunc = async (req, res) => {
+  try {
+    const driver = await Driver.findById(req.params.driverId);
+    if (!driver) {
+      return res.status(404).send('Driver not found');
+    }
+    res.render('vehicles/new', { driver });
+  } catch (error) {
+    console.log(error);
+    res.status(404).send('Server Error');
+  }
+};
+
+const create = async (req, res) => {
+  try {
+    const driver = await Driver.findById(req.params.driverId);
+    if (!driver) {
+      return res.status(404).json({ msg: 'Driver not found' });
+    }
+
+    const newVehicle = new Vehicle(req.body);
+    newVehicle.driver = driver._id;
+    await newVehicle.save();
+
+    driver.vehicles.push(newVehicle._id);
+    await driver.save();
+
+    res.redirect(`/drivers/${driver._id}/vehicles`);
+  } catch (error) {
+    res.status(404).json({ msg: error.message });
+  }
+};
+
+const show = async (req, res) => {
+  try {
+    const vehicle = await Vehicle.findById(req.params.id).populate('driver');
+    if (!vehicle) {
+      return res.status(404).json({ msg: 'Vehicle not found' });
+    }
+    res.render('vehicles/show.ejs', { vehicle });
+  } catch (error) {
+    res.status(404).json({ msg: error.message });
+  }
+};
+
+const edit = async (req, res) => {
+  try {
+    const vehicle = await Vehicle.findById(req.params.id).populate('driver');
+    if (!vehicle) {
+      return res.status(404).json({ msg: 'Vehicle not found' });
+    }
+    const drivers = await Driver.find({});
+    res.render('vehicles/edit.ejs', { vehicle, drivers });
+  } catch (error) {
+    res.status(404).json({ msg: error.message });
+  }
+};
+
+const update = async (req, res) => {
+  try {
+    const vehicle = await Vehicle.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+    res.redirect(`/drivers/${vehicle.driver}/vehicles`);
+  } catch (error) {
+    res.status(404).json({ msg: error.message });
+  }
+};
 
 const destroy = async (req, res) => {
   try {
@@ -21,58 +83,25 @@ const destroy = async (req, res) => {
     if (!vehicle) {
       return res.status(404).json({ msg: 'Vehicle not found' });
     }
-    res.redirect('/vehicles');
+
+    const driver = await Driver.findById(vehicle.driver);
+    if (driver) {
+      driver.vehicles.pull(vehicle._id);
+      await driver.save();
+    }
+
+    res.redirect(`/drivers/${driver._id}/vehicles`);
   } catch (error) {
-    res.status(400).json({ msg: error.message });
+    res.status(404).json({ msg: error.message });
   }
 };
-
-const update = async (req, res) => {
-  try {
-    const updatedVehicle = await Vehicle.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
-    res.redirect(`/vehicles/${updatedVehicle._id}`)
-  } catch (error) {
-    res.status(400).json({msg: error.message})
-  }
-}
-
-const create = async (req, res) => {
-  try {
-    const newVehicle = await Vehicle.create(req.body);
-    res.redirect(`/vehicles/${newVehicle._id}`);
-  } catch (error) {
-    res.status(400).json({ msg: error.message });
-  }
-};
-
-const edit = async (req, res) => {
-  try {
-      const foundVehicle = await Vehicle.findOne({ _id: req.params.id })
-      res.render('vehicles/edit.ejs', {
-          vehicle: foundVehicle
-      })
-  } catch (error) {
-      res.status(400).json({ msg: error.message })
-  }
-}
-
-const show = async (req, res) => {
-  try {
-      const foundVehicle = await Vehicle.findOne({ _id: req.params.id })
-      res.render('vehicles/show.ejs', {
-          vehicle: foundVehicle
-      })
-  } catch (error) {
-      res.status(400).json({ msg: error.message })
-  }
-}
 
 module.exports = {
   index,
   newFunc,
-  destroy,
-  update,
   create,
+  show,
   edit,
-  show
-}
+  update,
+  destroy
+};

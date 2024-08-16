@@ -1,26 +1,26 @@
-const express = require('express')
-const router = express.Router()
-const vehicleCtrl = require('../controllers/vehicles')
+const express = require('express');
+const router = express.Router({ mergeParams: true }); 
+const vehicleCtrl = require('../controllers/vehicles');
 
-// index
-router.get('/', vehicleCtrl.index)
+// Index 
+router.get('/', vehicleCtrl.index);
 
-// new
-router.get('/new', vehicleCtrl.newFunc)
+// New 
+router.get('/new', vehicleCtrl.newFunc);
 
-// update
-router.put('/:id', vehicleCtrl.update)
+// Create 
+router.post('/', vehicleCtrl.create);
 
-// delete
-router.delete('/:id', vehicleCtrl.destroy)
+// Show 
+router.get('/:id', vehicleCtrl.show);
 
-// create
-router.post('/', vehicleCtrl.create)
+// Edit 
+router.get('/:id/edit', vehicleCtrl.edit);
 
-// edit
-router.get('/:id/edit', vehicleCtrl.edit)
+// Update 
+router.put('/:id', vehicleCtrl.update);
 
-// show
-router.get('/:id', vehicleCtrl.show)
+// Delete 
+router.delete('/:id', vehicleCtrl.destroy);
 
-module.exports = router
+module.exports = router;

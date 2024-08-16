@@ -1,26 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const driverCtrl = require('../controllers/drivers');
+const isSignedIn = require('../middleware/is-signed-in');
 
-// new
-router.get('/new', driverCtrl.newFunc);
+// Index 
+router.get('/', isSignedIn, driverCtrl.index);
 
-// index
-router.get('/', driverCtrl.index);
+// New 
+router.get('/new', isSignedIn, driverCtrl.newFunc);
 
-// create
-router.post('/', driverCtrl.create);
+// Create 
+router.post('/', isSignedIn, driverCtrl.create);
 
-// edit
-router.get('/:id/edit', driverCtrl.edit);
+// Show
+router.get('/:id', isSignedIn, driverCtrl.show);
 
-// show
-router.get('/:id', driverCtrl.show);
+// Edit
+router.get('/:id/edit', isSignedIn, driverCtrl.edit);
 
-// update
-router.put('/:id', driverCtrl.update);
+// Update
+router.put('/:id', isSignedIn, driverCtrl.update);
 
-// delete
-router.delete('/:id', driverCtrl.destroy);
+// Delete
+router.delete('/:id', isSignedIn, driverCtrl.destroy);
+
+// Nested routes for vehicles under a specific driver
+router.use('/:driverId/vehicles', isSignedIn, require('./vehicles'));
 
 module.exports = router;
