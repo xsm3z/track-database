@@ -80,17 +80,7 @@ const update = async (req, res) => {
 const destroy = async (req, res) => {
   try {
     const vehicle = await Vehicle.findByIdAndDelete(req.params.id);
-    if (!vehicle) {
-      return res.status(404).json({ msg: 'Vehicle not found' });
-    }
-
-    const driver = await Driver.findById(vehicle.driver);
-    if (driver) {
-      driver.vehicles.pull(vehicle._id);
-      await driver.save();
-    }
-
-    res.redirect(`/drivers/${driver._id}/vehicles`);
+    res.redirect(`/drivers/${req.params.driverId}/vehicles`);
   } catch (error) {
     res.status(404).json({ msg: error.message });
   }

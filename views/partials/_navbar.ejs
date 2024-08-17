@@ -13,8 +13,13 @@
     <a href="/">Home</a>
     <a href="/drivers">Drivers</a>
     <a href="/vehicles">Vehicles</a>
-    <a href="/auth/sign-in">Sign In</a>
-    <a href="/auth/sign-up">Sign Up</a>
-  </div> 
+    
+    <% if (user) { %>
+      <a href="/auth/sign-out">Sign Out</a>
+    <% } else { %>
+      <a href="/auth/sign-in">Sign In</a>
+      <a href="/auth/sign-up">Sign Up</a>
+    <% } %>
+  </div>
 </body>
 </html>

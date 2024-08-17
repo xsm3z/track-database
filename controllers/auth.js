@@ -10,7 +10,7 @@ const renderSignInForm = (req, res) => {
 
 const signOut = (req, res) => {
   req.session.destroy();
-  res.redirect('/');
+  res.redirect('/auth/sign-in')
 };
 
 const signUp = async (req, res) => {

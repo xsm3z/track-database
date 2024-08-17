@@ -1,4 +1,5 @@
 const Driver = require('../models/driver');
+const Vehicle = require('../models/vehicle');
 
 const index = async (req, res) => {
   try {
@@ -51,6 +52,11 @@ const update = async (req, res) => {
 
 const destroy = async (req, res) => {
   try {
+    const driver = await Driver.findById(req.params.id);
+    if (!driver) {
+      return res.status(404).json({ msg: 'Driver not found' });
+    }
+    await Vehicle.deleteMany({ driver: driver._id });
     await Driver.findByIdAndDelete(req.params.id);
     res.redirect('/drivers');
   } catch (error) {
