@@ -8,13 +8,15 @@
 <body>
   <%- include('../partials/_navbar') %>
 <h1>All Drivers</h1>
-<ul>
-  <% drivers.forEach(driver => { %>
-    <li>
-      <a href="/drivers/<%= driver._id %>"><%= driver.firstName %> <%= driver.lastName %></a>
-    </li>
-  <% }) %>
-</ul>
-<a href="/drivers/new"><button type="submit">Add Driver</button></a>
+<div class="container">
+  <ul>
+    <% drivers.forEach(driver => { %>
+      <li>
+        <a href="/drivers/<%= driver._id %>"><%= driver.firstName %> <%= driver.lastName %></a>
+      </li>
+    <% }) %>
+  </ul>
+  <a href="/drivers/new"><button type="submit">Add Driver</button></a>
+</div>
 </body>
 </html>

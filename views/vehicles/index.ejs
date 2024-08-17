@@ -8,12 +8,13 @@
 <body>
   <%- include('../partials/_navbar') %>
   <h1>All Vehicles</h1>
+  <div class="container">
   <ul>
     <% vehicles.forEach(vehicle => { %>
       <li>
         <% if (vehicle.driver) { %>
           <a href="/drivers/<%= vehicle.driver._id %>/vehicles/<%= vehicle._id %>">
-            <%= vehicle.make %> <%= vehicle.model %> (Driver: <%= vehicle.driver.firstName %> <%= vehicle.driver.lastName %>)
+            <%= vehicle.make %> <%= vehicle.model %> Driver: <%= vehicle.driver.firstName %> <%= vehicle.driver.lastName %>
           </a>
         <% } else { %>
           <%= vehicle.make %> <%= vehicle.model %> (No driver assigned)
@@ -21,5 +22,6 @@
       </li>
     <% }) %>
   </ul>
+  </div>
 </body>
 </html>

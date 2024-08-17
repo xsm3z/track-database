@@ -8,6 +8,8 @@
 <body>
   <%- include('../partials/_navbar') %>
   <h1><%= driver.firstName %> <%= driver.lastName %></h1>
+<div class="container">
+  <h2>Contact info</h2>
   <p>Email: <%= driver.email %></p>
   <h2>Vehicles</h2>
   <ul>
@@ -17,11 +19,17 @@
       </li>
     <% }) %>
   </ul> 
-   <a href="/drivers/<%= driver._id %>/vehicles/new">Add a New Vehicle</a>
-   <a href="/drivers/<%= driver._id %>/edit">Edit Driver</a>
+  <a 
+  href="/drivers/<%= driver._id %>/vehicles/new" class="button-link">
+    <button>Add a New Vehicle</button>
+  </a>
+  <a 
+  href="/drivers/<%= driver._id %>/edit" class="button-link">
+    <button>Edit Driver</button>
+  </a>
   <form action="/drivers/<%= driver._id %>?_method=DELETE" method="POST">
     <button type="submit">Delete Driver</button>
   </form>
-  <a href="/drivers">Back to Drivers</a>
+</div>
 </body>
 </html>

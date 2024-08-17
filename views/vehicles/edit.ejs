@@ -8,6 +8,7 @@
 <body>
   <%- include('../partials/_navbar') %>
   <h1>Edit Vehicle: <%= vehicle.make %> <%= vehicle.model %></h1>
+<div class="container">
   <form action="/drivers/<%= vehicle.driver._id %>/vehicles/<%= vehicle._id %>?_method=PUT" method="POST">
     <label for="vin">VIN:</label>
     <input type="text" name="vin" value="<%= vehicle.vin %>" required>
@@ -21,6 +22,7 @@
     <input type="number" name="number" value="<%= vehicle.number %>" required>   
     <button type="submit">Update Vehicle</button>
   </form> 
+</div>
   <a href="/drivers/<%= vehicle.driver._id %>/vehicles">Back to Vehicles</a>
 </body>
 </html>
